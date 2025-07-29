@@ -6,77 +6,99 @@ interface ChatGPTEmbedProps {
   pluginUrl?: string;
 }
 
-export default function ChatGPTEmbed({ pluginUrl = "https://chatgpt.com/g/g-6888eb78e6dc819198841eed4e39c258-cor-chat-gpt" }: ChatGPTEmbedProps) {
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+export default function ChatGPTEmbed({ pluginUrl = "https://chatgpt.com" }: ChatGPTEmbedProps) {
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleLoad = () => {
-    setIsLoading(false);
-    setError('');
+  const handleOpenChatGPT = () => {
+    setIsLoading(true);
+    // Open main ChatGPT in new tab
+    window.open(pluginUrl, '_blank', 'noopener,noreferrer');
+    // Reset loading state after a short delay
+    setTimeout(() => setIsLoading(false), 1000);
   };
 
-  const handleError = () => {
-    setIsLoading(false);
-    setError('Failed to load ChatGPT plugin');
+  const handleOpenChatGPTPlus = () => {
+    setIsLoading(true);
+    // Open ChatGPT Plus (if user has access)
+    window.open('https://chatgpt.com/gpt-4', '_blank', 'noopener,noreferrer');
+    setTimeout(() => setIsLoading(false), 1000);
   };
 
   return (
     <div className="w-full h-full min-h-[600px] bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       <div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-          COR Chat GPT Plugin
+          COR AI Chat Assistant
         </h3>
         <p className="text-sm text-gray-600 dark:text-gray-400">
           Powered by OpenAI&apos;s ChatGPT
         </p>
       </div>
-      
-      <div className="relative w-full h-[600px]">
-        {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2"></div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">Loading ChatGPT plugin...</p>
-            </div>
+
+      <div className="flex flex-col items-center justify-center h-[500px] p-8">
+        <div className="text-center max-w-md">
+          {/* AI Chat Icon */}
+          <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
           </div>
-        )}
-        
-        {error && (
-          <div className="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-              </div>
-              <p className="text-sm text-red-600 dark:text-red-400 mb-2">{error}</p>
-              <button
-                onClick={() => {
-                  setIsLoading(true);
-                  setError('');
-                  // Force reload the iframe
-                  const iframe = document.getElementById('chatgpt-iframe') as HTMLIFrameElement;
-                  if (iframe) {
-                    iframe.src = iframe.src;
-                  }
-                }}
-                className="text-sm text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
-              >
-                Try again
-              </button>
-            </div>
+
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+            Ready to Chat with AI?
+          </h2>
+          
+          <p className="text-gray-600 dark:text-gray-400 mb-8">
+            Access ChatGPT directly from your COR AI dashboard. Choose your preferred option below.
+          </p>
+
+          <div className="space-y-4">
+            <button
+              onClick={handleOpenChatGPT}
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            >
+              {isLoading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Opening...
+                </>
+              ) : (
+                <>
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                  Open ChatGPT (Free)
+                </>
+              )}
+            </button>
+
+            <button
+              onClick={handleOpenChatGPTPlus}
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            >
+              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              Open ChatGPT Plus (GPT-4)
+            </button>
           </div>
-        )}
-        
-        <iframe
-          id="chatgpt-iframe"
-          src={pluginUrl}
-          className="w-full h-full border-0"
-          title="COR Chat GPT Plugin"
-          onLoad={handleLoad}
-          onError={handleError}
-          sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
-        />
+
+          <div className="mt-6 text-xs text-gray-500 dark:text-gray-400 space-y-1">
+            <p>• Opens in a new tab</p>
+            <p>• Requires ChatGPT account</p>
+            <p>• Free version available</p>
+            <p>• Plus version requires subscription</p>
+          </div>
+
+          <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+            <p className="text-xs text-blue-700 dark:text-blue-300">
+              <strong>Note:</strong> The original plugin URL was not found. We&apos;ve updated to use the main ChatGPT interface. 
+              You can still access all ChatGPT features and create custom conversations.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
