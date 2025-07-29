@@ -173,3 +173,4 @@ For support, email support@cor-gpt.com or create an issue in this repository.
 ---
 
 **Built with ❤️ by the COR GPT Team**
+# cor-ai-chat
