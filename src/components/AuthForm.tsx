@@ -42,8 +42,8 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
       if (onSuccess) {
         onSuccess();
       }
-    } catch (error: any) {
-      setError(error.message || 'An error occurred');
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -62,8 +62,8 @@ export default function AuthForm({ onSuccess }: AuthFormProps) {
     try {
       await resetPassword(email);
       setMessage('Password reset email sent!');
-    } catch (error: any) {
-      setError(error.message || 'Failed to send reset email');
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : 'Failed to send reset email');
     } finally {
       setLoading(false);
     }

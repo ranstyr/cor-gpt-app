@@ -39,16 +39,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!auth) return;
+    
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
     });
 
     return unsubscribe;
-  }, []);
+  }, [auth]);
 
   const signIn = async (email: string, password: string) => {
     try {
+      if (!auth) throw new Error('Authentication not initialized');
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
       throw error;
@@ -57,6 +60,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signUp = async (email: string, password: string) => {
     try {
+      if (!auth) throw new Error('Authentication not initialized');
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (error) {
       throw error;
@@ -65,6 +69,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const logout = async () => {
     try {
+      if (!auth) throw new Error('Authentication not initialized');
       await signOut(auth);
     } catch (error) {
       throw error;
@@ -73,6 +78,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const resetPassword = async (email: string) => {
     try {
+      if (!auth) throw new Error('Authentication not initialized');
       await sendPasswordResetEmail(auth, email);
     } catch (error) {
       throw error;
