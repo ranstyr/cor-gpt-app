@@ -6,7 +6,7 @@ interface ChatGPTEmbedProps {
   pluginUrl?: string;
 }
 
-export default function ChatGPTEmbed({ pluginUrl = "https://chatgpt.com" }: ChatGPTEmbedProps) {
+export default function ChatGPTEmbed({ pluginUrl = "https://chatgpt.com/g/g-6888eb78e6dc819198841eed4e39c258-cor-chat-gpt" }: ChatGPTEmbedProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOpenChatGPT = () => {
@@ -68,20 +68,9 @@ export default function ChatGPTEmbed({ pluginUrl = "https://chatgpt.com" }: Chat
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
-                  Open ChatGPT (Free)
+                  Open COR AI Chat Assistant
                 </>
               )}
-            </button>
-
-            <button
-              onClick={handleOpenChatGPTPlus}
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-            >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              Open ChatGPT Plus (GPT-4)
             </button>
           </div>
 
